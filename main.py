@@ -1,4 +1,218 @@
-from typing import List
+from typing import Optional, List
+from numpy import median
+
+
+def romanToInt(s: str) -> int:
+    options = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    other_options = {'IV': 4, 'IX': 9, 'XL': 40, 'XC': 90, 'CD': 400, 'CM': 900}
+
+    result = 0
+    indice = 0
+    while True:
+        if indice == len(s):
+            return result
+
+        if indice + 1 < len(s):
+            if other_options.get(s[indice] + s[indice + 1], False):
+                result += other_options[s[indice] + s[indice + 1]]
+                indice += 2
+                continue
+
+        result += options[s[indice]]
+        indice += 1
+
+    return result
+
+
+def removeElement(nums: List[int], val: int) -> int:
+    contador = nums.count(val)
+
+    while val in nums:
+        nums.remove(val)
+
+    for x in range(contador):
+        nums.append(val)
+
+    return len(nums) - contador
+
+
+def merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+    """
+    Do not return anything, modify nums1 in-place instead.
+    """
+    maior = m if m > n else n
+    for _ in range(maior):
+        if len(nums1) == m and len(nums2) == n:
+            break
+
+        if len(nums1) != m:
+            nums1.pop()
+
+        if len(nums2) != n:
+            nums2.pop()
+
+    nums1.extend(nums2)
+    nums1.sort()
+
+    print(nums1)
+    print(nums2)
+
+
+# merge([0,0,0,0,0], 0, [1,2,3,4,5], 5)
+
+
+def removeDuplicates(nums: List[int]) -> int:
+    contador = 0
+
+    while contador < len(nums) - 1:
+        if nums[contador] == nums[contador + 1]:
+            nums.remove(nums[contador])
+        else:
+            contador += 1
+
+    print(nums)
+
+    return len(nums)
+
+
+# removeDuplicates([0,0,1,1,1,2,2,3,3,4])
+# removeDuplicates([1,1,2])
+
+
+def climbStairs(n: int) -> int:
+    """
+    A resposta para essa pergunta esta no Fibonacci!
+    """
+
+    infos = {'actual': 1, 'past': 0, 'temp': 0}
+
+    for c in range(n):
+        infos['temp'] = infos['actual']
+        infos['actual'] = infos['actual'] + infos['past']
+        infos['past'] = infos['temp']
+
+    return infos['actual']
+
+
+# print(climbStairs(2))
+# print(climbStairs(3))
+
+
+def maxArea(height: List[int]) -> int:
+    ponti_ini = 0
+    ponti_fini = len(height) - 1
+    better_area = (ponti_fini - ponti_ini) * (height[ponti_fini] if height[ponti_ini] > height[ponti_fini] else height[ponti_ini])
+
+    for i in range(len(height)):
+        if (ponti_fini - ponti_ini) <= 0:
+            break
+
+        area_atual = (ponti_fini - ponti_ini) * (height[ponti_fini] if height[ponti_ini] > height[ponti_fini] else height[ponti_ini])
+
+        if area_atual > better_area:
+            better_area = area_atual
+
+        if height[ponti_ini] > height[ponti_fini]:
+            ponti_fini -= 1
+        else:
+            ponti_ini += 1
+
+    return better_area
+
+
+# maxArea([1,8,6,2,5,4,8,3,7])
+# print(maxArea([1,1]))
+# print(maxArea([8,7,2,1]))
+
+
+def reverseString(s: List[str]) -> None:
+    x = len(s) - 1
+
+    for i in range(len(s)):
+        if x <= i:
+            break
+
+        s[i], s[x] = s[x], s[i]
+        x -= 1
+
+    print(s)
+
+
+# reverseString(["h","e","l","l","o"])      # -> ["o","l","l","e","h"]
+# reverseString(["H","a","n","n","a","h"])  # -> ["h","a","n","n","a","H"]
+
+
+def isPowerOfTwo(n: int) -> bool:
+    while True:
+        if n == 2 or n == 1:
+            return True
+
+        if n % 2 == 1 or n == 0:
+            return False
+
+        n = n / 2
+
+
+# print(isPowerOfTwo(1))   # -> True
+# print(isPowerOfTwo(16))  # -> True
+# print(isPowerOfTwo(3))   # -> False
+# print(isPowerOfTwo(8))   # -> True
+# print(isPowerOfTwo(32))   # -> True
+
+
+def moveZeroes(nums: List[int]) -> None:
+    """
+    Do not return anything, modify nums in-place instead.
+    """
+    i = 0
+    for j in range(len(nums)):
+        if nums[j] != 0:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+
+
+# moveZeroes([0,1,0,3,12])  # -> [1,3,12,0,0]
+# moveZeroes([0])           # -> [0]
+# moveZeroes([0,0,1])       # -> [1,0,0]
+# moveZeroes([1,0,1])       # -> [1,1,0]
+
+
+def reverseVowels(s: str) -> str:
+    if len(s) == 1:
+        return s
+
+    vowles = ['a', 'e', 'i', 'o', 'u']
+    s = [letter for letter in s]
+
+    ini = 0
+    fini = len(s) - 1
+
+    while ini <= fini:
+        if s[ini].lower() in vowles and s[fini].lower() in vowles:
+            s[ini], s[fini] = s[fini], s[ini]
+
+            ini += 1
+            fini -= 1
+
+        elif s[ini].lower() in vowles and s[fini].lower() not in vowles:
+            fini -= 1
+
+        elif s[fini].lower() in vowles and s[ini].lower() not in vowles:
+            ini += 1
+        else:
+            ini += 1
+            fini -= 1
+
+    return ''.join(s)
+
+
+# print(reverseVowels("IceCreAm"))  # -> "AceCreIm"
+# print(reverseVowels("leetcode"))  # -> "leotcede"
+# print(reverseVowels("ai"))  # -> "ia"
+# print(reverseVowels("!!!"))  # -> "ia"
+# print(reverseVowels(" apG0i4maAs::sA0m4i0Gp0"))  # -> " ipG0A4mAas::si0m4a0Gp0"
+
+print(list(range(10)))
 
 
 def strStr(haystack: str, needle: str) -> int:
