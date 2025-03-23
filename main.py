@@ -212,8 +212,6 @@ def reverseVowels(s: str) -> str:
 # print(reverseVowels("!!!"))  # -> "ia"
 # print(reverseVowels(" apG0i4maAs::sA0m4i0Gp0"))  # -> " ipG0A4mAas::si0m4a0Gp0"
 
-print(list(range(10)))
-
 
 def strStr(haystack: str, needle: str) -> int:
     return haystack.find(needle)
@@ -408,5 +406,81 @@ def detectCapitalUse(word: str) -> bool:
     return False
 
 
-print(detectCapitalUse("USA"))   # -> True
-print(detectCapitalUse("FlaG"))  # -> False
+# print(detectCapitalUse("USA"))   # -> True
+# print(detectCapitalUse("FlaG"))  # -> False
+
+
+def countSegments(s: str) -> int:
+    if len(s.strip()) == 0:
+        return 0
+
+    ls = s.strip().split(' ')
+    result = []
+    for c in ls:
+        if c != '':
+            result.append(c)
+
+    return len(result)
+
+
+# print(countSegments("Hello, my name is John"))   # -> 5
+# print(countSegments("Hello"))                    # -> 1
+# print(countSegments(", , , ,        a, eaefa"))  # -> 6
+
+
+def sortPeople(names: List[str], heights: List[int]) -> List[str]:
+    union = list(zip(names, heights))
+    union.sort(key=lambda x: x[1], reverse=True)
+    result = [x[0] for x in union]
+    return result
+
+
+# print(sortPeople(names=["Mary","John","Emma"], heights=[180,165,170]))  # -> ["Mary","Emma","John"]
+# print(sortPeople(names=["Alice","Bob","Bob"], heights=[155,185,150]))    # -> ["Bob","Alice","Bob"]
+
+
+def intersectII(nums1: List[int], nums2: List[int]) -> List[int]:
+    result = []
+
+    cont1 = 0
+    cont2 = 0
+
+    nums1.sort()
+    nums2.sort()
+    while True:
+        if cont1 == len(nums1) or cont2 == len(nums2):
+            break
+
+        if nums1[cont1] == nums2[cont2]:
+            result.append(nums1[cont1])
+            cont1 += 1
+            cont2 += 1
+        elif nums1[cont1] > nums2[cont2]:
+            cont2 += 1
+        else:
+            cont1 += 1
+
+    return result
+
+
+# print(intersectII(nums1=[1,2,2,1], nums2=[2,2]))      # -> [2,2]
+# print(intersectII(nums1=[4,9,5], nums2=[9,4,9,8,4]))  # -> [4,9] or [9,4]
+# print(intersectII(nums1=[1,2], nums2=[1,1]))          # -> [1]
+# print(intersectII(nums1=[2,1], nums2=[1,2]))          # -> [1,2]
+# print(intersectII(nums1=[3,1,2], nums2=[1,1]))        # -> [1]
+
+
+def findDifference(nums1: List[int], nums2: List[int]) -> List[List[int]]:
+    hash_num1 = {value for value in nums1}
+    hash_num2 = {value for value in nums2}
+
+    for num in hash_num1.copy():
+        if num in hash_num2:
+            hash_num1.remove(num)
+            hash_num2.remove(num)
+
+    return [list(hash_num1), list(hash_num2)]
+
+
+print(findDifference(nums1 = [1,2,3], nums2 = [2,4,6]))  # -> [[1,3],[4,6]]
+print(findDifference(nums1 = [1,2,3,3], nums2 = [1,1,2,2]))  # -> [[3],[]]
