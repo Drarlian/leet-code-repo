@@ -535,6 +535,66 @@ for word in words:
         res.append(word)
 return res
 """
-print(findWords(["Hello","Alaska","Dad","Peace"]))  # -> ["Alaska","Dad"]
-print(findWords(["omk"]))                           # -> []
-print(findWords(["adsdf","sfd"]))                   # -> ["adsdf","sfd"]
+# print(findWords(["Hello","Alaska","Dad","Peace"]))  # -> ["Alaska","Dad"]
+# print(findWords(["omk"]))                           # -> []
+# print(findWords(["adsdf","sfd"]))                   # -> ["adsdf","sfd"]
+
+
+def numJewelsInStones(jewels: str, stones: str) -> int:
+    hash_response = dict()
+    for stone in stones:
+        hash_response[stone] = hash_response.get(stone, 0) + 1
+
+    cont = 0
+    for jewel in jewels:
+        if jewel in hash_response:
+            cont += hash_response[jewel]
+            del hash_response[jewel]
+
+    return cont
+
+
+# print(numJewelsInStones(jewels="aA", stones="aAAbbbb"))  # -> 3
+# print(numJewelsInStones(jewels="z", stones="ZZ"))        # -> 0
+
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def deleteDuplicates(head: Optional[ListNode]) -> Optional[ListNode]:
+    # import copy
+    # temp_head = copy.deepcopy(head)
+    temp_head = head  # Atribuindo o temp_head para o endereço inicial de head.
+
+    while head and head.next:
+        if head.val == head.next.val:
+            head.next = head.next.next
+        else:
+            head = head.next
+
+    return temp_head
+
+
+def selfDividingNumbers(left: int, right: int) -> List[int]:
+    result = []
+    for num in range(left, right + 1):
+        if '0' in str(num):
+            continue
+
+        is_self_dividing = True
+        for little_num in str(num):
+            if num % int(little_num) != 0:
+                is_self_dividing = False
+                break
+
+        if is_self_dividing:
+            result.append(num)
+
+    return result
+
+
+print(selfDividingNumbers(left=1, right=22))   # -> [1,2,3,4,5,6,7,8,9,11,12,15,22]
+print(selfDividingNumbers(left=47, right=85))  # -> [48,55,66,77]
