@@ -482,5 +482,59 @@ def findDifference(nums1: List[int], nums2: List[int]) -> List[List[int]]:
     return [list(hash_num1), list(hash_num2)]
 
 
-print(findDifference(nums1 = [1,2,3], nums2 = [2,4,6]))  # -> [[1,3],[4,6]]
-print(findDifference(nums1 = [1,2,3,3], nums2 = [1,1,2,2]))  # -> [[3],[]]
+# print(findDifference(nums1 = [1,2,3], nums2 = [2,4,6]))  # -> [[1,3],[4,6]]
+# print(findDifference(nums1 = [1,2,3,3], nums2 = [1,1,2,2]))  # -> [[3],[]]
+
+
+def findWords(words: List[str]) -> List[str]:
+    first = 'eiopqrtuwy'
+    second = 'adfghjkls'
+    third = 'bcmnvxz'
+
+    teste = (1, 2, 3, 4)
+    teste.count(1)
+
+    result = []
+    for word in words:
+        temp = set(word)
+        temp_dict = {'first': 0, 'second': 0, 'third': 0}
+
+        for letter in temp:
+            if list(temp_dict.values()).count(0) != 3 and list(temp_dict.values()).count(0) != 2:
+                break
+
+            if letter.lower() in first:
+                temp_dict['first'] += 1
+
+            elif letter.lower() in second:
+                temp_dict['second'] += 1
+
+            elif letter.lower() in third:
+                temp_dict['third'] += 1
+
+        if temp_dict['first'] == len(temp):
+            result.append(word)
+
+        if temp_dict['second'] == len(temp):
+            result.append(word)
+
+        if temp_dict['third'] == len(temp):
+            result.append(word)
+
+    return result
+
+
+"""
+l1="qwertyuiop"
+l2="asdfghjkl"
+l3="zxcvbnm"
+res=[]
+for word in words:
+    w=word.lower()
+    if len(set(l1+w))==len(l1) or len(set(l2+w))==len(l2) or len(set(l3+w))==len(l3) :
+        res.append(word)
+return res
+"""
+print(findWords(["Hello","Alaska","Dad","Peace"]))  # -> ["Alaska","Dad"]
+print(findWords(["omk"]))                           # -> []
+print(findWords(["adsdf","sfd"]))                   # -> ["adsdf","sfd"]
