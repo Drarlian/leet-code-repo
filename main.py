@@ -596,5 +596,58 @@ def selfDividingNumbers(left: int, right: int) -> List[int]:
     return result
 
 
-print(selfDividingNumbers(left=1, right=22))   # -> [1,2,3,4,5,6,7,8,9,11,12,15,22]
-print(selfDividingNumbers(left=47, right=85))  # -> [48,55,66,77]
+# print(selfDividingNumbers(left=1, right=22))   # -> [1,2,3,4,5,6,7,8,9,11,12,15,22]
+# print(selfDividingNumbers(left=47, right=85))  # -> [48,55,66,77]
+
+
+def removeDuplicates(s: str) -> str:
+    res = []
+    for c in s:
+        if res and res[-1] == c:
+            res.pop()
+        else:
+            res.append(c)
+    return "".join(res)
+
+
+# print(removeDuplicates("abbaca"))  # -> "ca"
+# print(removeDuplicates("azxxzy"))  # -> "ay"
+# print(removeDuplicates("aaaaaaaa"))  # -> "# "
+
+
+def dominantIndex(nums: List[int]) -> int:
+    sorted_nums = sorted(nums, reverse=True)
+
+    if sorted_nums[1] > (sorted_nums[0] / 2):
+        return -1
+    else:
+        return nums.index(sorted_nums[0])
+
+
+# print(dominantIndex([3,6,1,0]))  # -> 1
+# print(dominantIndex([1,2,3,4]))  # -> -1
+
+
+def flipAndInvertImage(image: List[List[int]]) -> List[List[int]]:
+    result = [list(map(lambda x: 1 if x == 0 else 0, value[::-1])) for value in image]
+
+    return result
+
+
+# print(flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]]))                  # -> [[1,0,0],[0,1,0],[1,1,1]]
+# print(flipAndInvertImage([[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]))  # -> [[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]
+
+
+def transpose(matrix: List[List[int]]) -> List[List[int]]:
+    result = [[] for _ in matrix[0]]
+
+    for row in range(len(matrix[0])):
+        for column in range(len(matrix)):
+            result[row].append(matrix[column][row])
+
+    return result
+
+
+print(transpose([[1,2,3],[4,5,6],[7,8,9]]))  # -> [[1,4,7],[2,5,8],[3,6,9]]
+print(transpose([[1,2,3],[4,5,6]]))          # -> [[1,4],[2,5],[3,6]]
+print(transpose([[1,2],[4,5],[7,8]]))        # -> [[1, 4, 7], [2, 5, 8]]
