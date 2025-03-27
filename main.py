@@ -101,13 +101,15 @@ def climbStairs(n: int) -> int:
 def maxArea(height: List[int]) -> int:
     ponti_ini = 0
     ponti_fini = len(height) - 1
-    better_area = (ponti_fini - ponti_ini) * (height[ponti_fini] if height[ponti_ini] > height[ponti_fini] else height[ponti_ini])
+    better_area = (ponti_fini - ponti_ini) * (
+        height[ponti_fini] if height[ponti_ini] > height[ponti_fini] else height[ponti_ini])
 
     for i in range(len(height)):
         if (ponti_fini - ponti_ini) <= 0:
             break
 
-        area_atual = (ponti_fini - ponti_ini) * (height[ponti_fini] if height[ponti_ini] > height[ponti_fini] else height[ponti_ini])
+        area_atual = (ponti_fini - ponti_ini) * (
+            height[ponti_fini] if height[ponti_ini] > height[ponti_fini] else height[ponti_ini])
 
         if area_atual > better_area:
             better_area = area_atual
@@ -362,7 +364,7 @@ def repeatedSubstringPattern(s: str) -> bool:
         return True
 
     for caracter in range(len(s) - 1):
-        if s.replace(s[:caracter+1], '') == '':
+        if s.replace(s[:caracter + 1], '') == '':
             return True
 
     return False
@@ -535,6 +537,8 @@ for word in words:
         res.append(word)
 return res
 """
+
+
 # print(findWords(["Hello","Alaska","Dad","Peace"]))  # -> ["Alaska","Dad"]
 # print(findWords(["omk"]))                           # -> []
 # print(findWords(["adsdf","sfd"]))                   # -> ["adsdf","sfd"]
@@ -648,6 +652,51 @@ def transpose(matrix: List[List[int]]) -> List[List[int]]:
     return result
 
 
-print(transpose([[1,2,3],[4,5,6],[7,8,9]]))  # -> [[1,4,7],[2,5,8],[3,6,9]]
-print(transpose([[1,2,3],[4,5,6]]))          # -> [[1,4],[2,5],[3,6]]
-print(transpose([[1,2],[4,5],[7,8]]))        # -> [[1, 4, 7], [2, 5, 8]]
+# print(transpose([[1,2,3],[4,5,6],[7,8,9]]))  # -> [[1,4,7],[2,5,8],[3,6,9]]
+# print(transpose([[1,2,3],[4,5,6]]))          # -> [[1,4],[2,5],[3,6]]
+# print(transpose([[1,2],[4,5],[7,8]]))        # -> [[1, 4, 7], [2, 5, 8]]
+
+
+def reverseOnlyLetters(s: str) -> str:
+    hash_map = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
+                "v", "w", "x", "y", "z"}
+
+    array_s = [value for value in s]
+
+    left = 0
+    right = len(s) - 1
+
+    while True:
+        if left == right or (left == len(s) - 1) or right == 0 or left > right:
+            break
+
+        if array_s[left].lower() in hash_map and array_s[right].lower() in hash_map:
+            array_s[left], array_s[right] = array_s[right], array_s[left]
+            left += 1
+            right -= 1
+        elif array_s[left].lower() in hash_map and array_s[right].lower() not in hash_map:
+            right -= 1
+        elif array_s[left].lower() not in hash_map and array_s[right].lower() in hash_map:
+            left += 1
+        else:
+            left += 1
+            right -= 1
+
+    return ''.join(array_s)
+
+
+# print(reverseOnlyLetters("ab-cd"))                 # -> "dc-ba"
+# print(reverseOnlyLetters("a-bC-dEf-ghIj"))         # -> "j-Ih-gfE-dcba"
+# print(reverseOnlyLetters("Test1ng-Leet=code-Q!"))  # -> "Qedo1ct-eeLg=ntse-T
+
+
+def isMonotonic(nums: List[int]) -> bool:
+    if sorted(nums) == nums or sorted(nums, reverse=True) == nums:
+        return True
+
+    return False
+
+
+print(isMonotonic([1,2,2,3]))  # -> True
+print(isMonotonic([6,5,4,4]))  # -> True
+print(isMonotonic([1,3,2]))    # -> False
