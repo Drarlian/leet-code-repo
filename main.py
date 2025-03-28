@@ -697,6 +697,19 @@ def isMonotonic(nums: List[int]) -> bool:
     return False
 
 
-print(isMonotonic([1,2,2,3]))  # -> True
-print(isMonotonic([6,5,4,4]))  # -> True
-print(isMonotonic([1,3,2]))    # -> False
+# print(isMonotonic([1,2,2,3]))  # -> True
+# print(isMonotonic([6,5,4,4]))  # -> True
+# print(isMonotonic([1,3,2]))    # -> False
+
+
+def reverseWords(s: str) -> str:
+    temp_list = s.split(' ')
+
+    for i in range(len(temp_list)):
+        temp_list[i] = temp_list[i][::-1]
+
+    return ' '.join(temp_list)
+
+
+print(reverseWords("Let's take LeetCode contest"))  # -> "s'teL ekat edoCteeL tsetnoc"
+print(reverseWords("Mr Ding"))                      # -> "rM gniD"
