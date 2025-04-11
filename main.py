@@ -711,5 +711,35 @@ def reverseWords(s: str) -> str:
     return ' '.join(temp_list)
 
 
-print(reverseWords("Let's take LeetCode contest"))  # -> "s'teL ekat edoCteeL tsetnoc"
-print(reverseWords("Mr Ding"))                      # -> "rM gniD"
+# print(reverseWords("Let's take LeetCode contest"))  # -> "s'teL ekat edoCteeL tsetnoc"
+# print(reverseWords("Mr Ding"))                      # -> "rM gniD"
+
+
+def commonChars(words: List[str]) -> List[str]:
+    if len(words) == 1:
+        return [letter for letter in words[0]]
+
+    if len(words) < 1:
+        return []
+
+    words.sort()
+    result = []
+
+    for word in words[0]:
+        exist_in_all = True
+        for indice, palavras in enumerate(words[1:]):
+            if word not in palavras:
+                exist_in_all = False
+                break
+            else:
+                words[indice + 1] = palavras.replace(word, '', 1)
+
+        if exist_in_all:
+            result.append(word)
+
+    return result
+
+
+print(commonChars(["bella","label","roller"]))  # -> ["e","l","l"]
+print(commonChars(["cool","lock","cook"]))      # -> ["c","o"]
+print(commonChars(["cool"]))      # -> ["c","o"]
