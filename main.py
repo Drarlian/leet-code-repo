@@ -740,6 +740,61 @@ def commonChars(words: List[str]) -> List[str]:
     return result
 
 
-print(commonChars(["bella","label","roller"]))  # -> ["e","l","l"]
-print(commonChars(["cool","lock","cook"]))      # -> ["c","o"]
-print(commonChars(["cool"]))      # -> ["c","o"]
+# print(commonChars(["bella","label","roller"]))  # -> ["e","l","l"]
+# print(commonChars(["cool","lock","cook"]))      # -> ["c","o"]
+# print(commonChars(["cool"]))                    # -> ['c', 'o', 'o', 'l']
+
+
+def isPalindrome(head: Optional[ListNode]) -> bool:
+    tempList = []
+
+    while head.next is not None:
+        tempList.append(head.val)
+        head = head.next
+
+    tempList.append(head.val)
+    return tempList == tempList[::-1]
+
+
+# print(isPalindrome([1,2,2,1]))  # -> true
+# print(isPalindrome([1,2]))      # -> false
+
+
+def middleNode(head: Optional[ListNode]) -> Optional[ListNode]:
+    tempData = []
+
+    while head is not None:
+        tempData.append(head)
+        head = head.next
+
+    return tempData[len(tempData) // 2]
+
+
+# print(middleNode([1,2,3,4,5]))    # -> [3,4,5]
+# print(middleNode([1,2,3,4,5,6]))  # -> [4,5,6]
+
+
+def removeElements(head: Optional[ListNode], val: int) -> Optional[ListNode]:
+    if head is None:
+        return head
+
+    init = None
+    passNode = None
+
+    while head is not None:
+        if head.val != val:
+            if passNode is None:
+                passNode = ListNode(head.val)
+                init = passNode
+            else:
+                passNode.next = ListNode(head.val)
+                passNode = passNode.next
+
+        head = head.next
+
+    return init
+
+
+print(removeElements([1,2,6,3,4,5,6], 6))  # -> [1,2,3,4,5]
+print(removeElements([], 1))               # -> []
+print(removeElements([7,7,7,7], 7))        # -> []
