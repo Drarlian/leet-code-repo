@@ -795,6 +795,50 @@ def removeElements(head: Optional[ListNode], val: int) -> Optional[ListNode]:
     return init
 
 
-print(removeElements([1,2,6,3,4,5,6], 6))  # -> [1,2,3,4,5]
-print(removeElements([], 1))               # -> []
-print(removeElements([7,7,7,7], 7))        # -> []
+# print(removeElements([1,2,6,3,4,5,6], 6))  # -> [1,2,3,4,5]
+# print(removeElements([], 1))               # -> []
+# print(removeElements([7,7,7,7], 7))        # -> []
+
+
+def countOperations(num1: int, num2: int) -> int:
+    operations = 0
+    while (num1 > 0) and (num2 > 0):
+        if num2 > num1:
+            num2 -= num1
+        else:
+            num1 -= num2
+
+        operations += 1
+
+    return operations
+
+# print(countOperations(num1 = 2, num2 = 3))    # -> 3
+# print(countOperations(num1 = 10, num2 = 10))  # -> 1
+
+
+def distinctIntegers(n: int) -> int:
+    board = [n]
+    for c in range(10):
+        for item in range(board[-1], 1, -1):
+            if board[-1] % item == 1:
+                board.append(item)
+
+    return len(set(board))
+
+
+# print(distinctIntegers(5))  # -> 4
+# print(distinctIntegers(3))  # -> 2
+
+
+def arrayRankTransform(arr: List[int]) -> List[int]:
+    hashResult = {}
+
+    for indice, item in enumerate(sorted(set(arr))):
+        hashResult[item] = indice + 1
+
+    return [hashResult[item] for item in arr]
+
+
+print(arrayRankTransform([40,10,20,30]))                # -> [4,1,2,3]
+print(arrayRankTransform([100,100,100]))                # -> [1,1,1]
+print(arrayRankTransform([37,12,28,9,100,56,80,5,12]))  # -> [5,3,4,2,8,6,7,1,3]
