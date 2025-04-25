@@ -839,6 +839,110 @@ def arrayRankTransform(arr: List[int]) -> List[int]:
     return [hashResult[item] for item in arr]
 
 
-print(arrayRankTransform([40,10,20,30]))                # -> [4,1,2,3]
-print(arrayRankTransform([100,100,100]))                # -> [1,1,1]
-print(arrayRankTransform([37,12,28,9,100,56,80,5,12]))  # -> [5,3,4,2,8,6,7,1,3]
+# print(arrayRankTransform([40,10,20,30]))                # -> [4,1,2,3]
+# print(arrayRankTransform([100,100,100]))                # -> [1,1,1]
+# print(arrayRankTransform([37,12,28,9,100,56,80,5,12]))  # -> [5,3,4,2,8,6,7,1,3]
+
+
+def insertGreatestCommonDivisors(head: Optional[ListNode]) -> Optional[ListNode]:
+    import math
+    temp = head
+
+    while head.next:
+        g = math.gcd(head.val, head.next.val)
+
+        head.next = ListNode(g, head.next)
+        head = head.next.next
+
+    return temp
+
+
+# print(insertGreatestCommonDivisors([18,6,10,3]))  # -> [18,6,6,2,10,1,3]
+# print(insertGreatestCommonDivisors([7]))          # -> [7]
+
+
+def pivotArray(nums: List[int], pivot: int) -> List[int]:
+    temp_less = []
+    temp_bigger = []
+    temp_equal = []
+
+    for num in nums:
+        if num < pivot:
+            temp_less.append(num)
+        elif num > pivot:
+            temp_bigger.append(num)
+        else:
+            temp_equal.append(pivot)
+
+    return temp_less + temp_equal + temp_bigger
+
+
+# print(pivotArray([9,12,5,10,14,3,10], 10))  # -> [9,5,3,10,10,12,14]
+# print(pivotArray([-3,4,3,2], 2))            # -> [-3,2,4,3]
+
+def mergeNodes(head: Optional[ListNode]) -> Optional[ListNode]:
+    new_node = None
+    ini_new_node = None
+
+    temp_value = 0
+    find_zero = 0
+    while head:
+        if (find_zero == 1 and head.val == 0):
+            if new_node is None:
+                new_node = ListNode(temp_value)
+                ini_new_node = new_node
+            else:
+                new_node.next = ListNode(temp_value)
+                new_node = new_node.next
+
+            find_zero = 1
+            temp_value = 0
+
+            head = head.next
+            continue
+
+        if head.val != 0:
+            temp_value += head.val
+        else:
+            find_zero += 1
+
+        head = head.next
+
+    return ini_new_node
+
+
+# print(mergeNodes([0,3,1,0,4,5,2,0]))  # -> [4,11]
+# print(mergeNodes([0,1,0,3,0,2,2,0]))  # -> [1,3,4]
+
+def mergeInBetween(list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode:
+    list1_ini = list1
+    list2_ini = list2
+
+    while list2.next:
+        list2 = list2.next
+
+    temp_cont = 0
+    while list1:
+        if temp_cont == a:
+            temp = list1
+
+            while temp:
+                if temp_cont == b:
+                    temp = temp.next
+                    break
+                temp_cont += 1
+                temp = temp.next
+
+            list1.val = list2_ini.val
+            list1.next = list2_ini.next
+            list2.next = temp
+            break
+
+        temp_cont += 1
+        list1 = list1.next
+
+    return list1_ini
+
+
+print(mergeInBetween([10,1,13,6,9,5], 3, 4, [1000000,1000001,1000002]))                  # -> [10,1,13,1000000,1000001,1000002,5]
+print(mergeInBetween([0,1,2,3,4,5,6], 2, 5, [1000000,1000001,1000002,1000003,1000004]))  # -> [0,1,1000000,1000001,1000002,1000003,1000004,6]
