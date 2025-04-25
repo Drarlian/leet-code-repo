@@ -944,5 +944,89 @@ def mergeInBetween(list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode
     return list1_ini
 
 
-print(mergeInBetween([10,1,13,6,9,5], 3, 4, [1000000,1000001,1000002]))                  # -> [10,1,13,1000000,1000001,1000002,5]
-print(mergeInBetween([0,1,2,3,4,5,6], 2, 5, [1000000,1000001,1000002,1000003,1000004]))  # -> [0,1,1000000,1000001,1000002,1000003,1000004,6]
+# print(mergeInBetween([10,1,13,6,9,5], 3, 4, [1000000,1000001,1000002]))                  # -> [10,1,13,1000000,1000001,1000002,5]
+# print(mergeInBetween([0,1,2,3,4,5,6], 2, 5, [1000000,1000001,1000002,1000003,1000004]))  # -> [0,1,1000000,1000001,1000002,1000003,1000004,6]
+
+def reverseBetween(head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+    head_ini = head
+    temp = []
+    temp_head = None
+    teste = True
+
+    cont_posi = 1
+    while head.next:
+        if cont_posi == left or (cont_posi + 1) == left:
+            if cont_posi == left:
+                temp_head = head
+                teste = False
+            else:
+                temp_head = head.next
+                cont_posi += 1
+
+            while temp_head:
+                temp.append(temp_head.val)
+
+                if cont_posi == right:
+                    temp_head = temp_head.next
+                    break
+
+                cont_posi += 1
+                temp_head = temp_head.next
+
+            temp = temp[::-1]
+            ini_new_part = None
+            for i, v in enumerate(temp):
+                if i == 0:
+                    new_part = ListNode(temp[i])
+                    ini_new_part = new_part
+                else:
+                    new_part.next = ListNode(temp[i])
+                    new_part = new_part.next
+
+            if not teste:
+                head = ini_new_part
+                head_ini = head
+                continue
+            else:
+                head.next = ini_new_part
+
+        cont_posi += 1
+        head = head.next
+
+    if temp_head:
+        head.next = temp_head
+    return head_ini
+
+
+print(reverseBetween([1,2,3,4,5], 2, 4))  # -> [1,4,3,2,5]
+print(reverseBetween([5], 1, 1))          # -> [5
+
+
+def deleteDuplicates(head: Optional[ListNode]) -> Optional[ListNode]:
+    result = []
+    duplicates = []
+
+    while head:
+        if head.val in result:
+            result.remove(head.val)
+            duplicates.append(head.val)
+        else:
+            if head.val not in duplicates:
+                result.append(head.val)
+        head = head.next
+
+    final_result = None
+    ini_result = None
+    for i, v in enumerate(result):
+        if i == 0:
+            final_result = ListNode(v)
+            ini_result = final_result
+        else:
+            final_result.next = ListNode(v)
+            final_result = final_result.next
+
+    return ini_result
+
+
+print(deleteDuplicates([1,2,3,3,4,4,5]))  # -> [1,2,5]
+print(deleteDuplicates([1,1,1,2,3]))      # -> [2,3]
