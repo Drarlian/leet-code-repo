@@ -1,6 +1,12 @@
 from typing import Optional, List
 from numpy import median
 
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
 
 def romanToInt(s: str) -> int:
     options = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
@@ -998,8 +1004,8 @@ def reverseBetween(head: Optional[ListNode], left: int, right: int) -> Optional[
     return head_ini
 
 
-print(reverseBetween([1,2,3,4,5], 2, 4))  # -> [1,4,3,2,5]
-print(reverseBetween([5], 1, 1))          # -> [5
+# print(reverseBetween([1,2,3,4,5], 2, 4))  # -> [1,4,3,2,5]
+# print(reverseBetween([5], 1, 1))          # -> [5
 
 
 def deleteDuplicates(head: Optional[ListNode]) -> Optional[ListNode]:
@@ -1028,5 +1034,72 @@ def deleteDuplicates(head: Optional[ListNode]) -> Optional[ListNode]:
     return ini_result
 
 
-print(deleteDuplicates([1,2,3,3,4,4,5]))  # -> [1,2,5]
-print(deleteDuplicates([1,1,1,2,3]))      # -> [2,3]
+# print(deleteDuplicates([1,2,3,3,4,4,5]))  # -> [1,2,5]
+# print(deleteDuplicates([1,1,1,2,3]))      # -> [2,3]
+
+
+def modifiedList(nums: List[int], head: Optional[ListNode]) -> Optional[ListNode]:
+    ini_head = head
+    fast = head.next
+    nums = set(nums)
+
+    while head:
+        if head.val in nums:
+            if fast is not None:
+                head.val = fast.val
+                head.next = fast.next
+            else:
+                temp_ini = ini_head
+                while temp_ini:
+                    if temp_ini.next.val == head.val:
+                        temp_ini.next = None
+                        break
+                    temp_ini = temp_ini.next
+                break
+
+        else:
+            head = head.next
+
+        if fast is not None:
+            fast = fast.next
+
+    return ini_head
+
+
+# print(modifiedList([1,2,3], [1,2,3,4,5]))  # -> [4,5]
+# print(modifiedList([1], [1,2,1,2,1,2]))    # ->  [2,2,2]
+# print(modifiedList([5], [1,2,3,4]))        # -> [1,2,3,4]
+
+def convertTemperature(celsius: float) -> List[float]:
+    return [celsius + 273.15, celsius * 1.80 + 32]
+
+
+# print(convertTemperature(36.50))   # -> [309.65000,97.70000]
+# print(convertTemperature(122.11))  # -> [395.26000,251.79800]
+
+def differenceOfSum(nums: List[int]) -> int:
+    cont = 0
+
+    for num in nums:
+        if len(str(num)) == 0:
+            cont += num
+        else:
+            cont += sum([int(c) for c in str(num)])
+
+    return abs(sum(nums) - cont)
+
+
+# print(differenceOfSum([1,15,6,3]))  # -> 9
+# print(differenceOfSum([1,2,3,4]))   # -> 0
+
+def firstPalindrome(words: List[str]) -> str:
+    for word in words:
+        if word == word[::-1]:
+            return word
+
+    return ""
+
+
+print(firstPalindrome(["abc","car","ada","racecar","cool"]))  # -> "ada"
+print(firstPalindrome(["notapalindrome","racecar"]))          # -> "racecar"
+print(firstPalindrome(["def","ghi"]))                         # -> ""
