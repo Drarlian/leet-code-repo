@@ -1100,6 +1100,102 @@ def firstPalindrome(words: List[str]) -> str:
     return ""
 
 
-print(firstPalindrome(["abc","car","ada","racecar","cool"]))  # -> "ada"
-print(firstPalindrome(["notapalindrome","racecar"]))          # -> "racecar"
-print(firstPalindrome(["def","ghi"]))                         # -> ""
+# print(firstPalindrome(["abc","car","ada","racecar","cool"]))  # -> "ada"
+# print(firstPalindrome(["notapalindrome","racecar"]))          # -> "racecar"
+# print(firstPalindrome(["def","ghi"]))                         # -> ""
+
+
+def removeOccurrences( s: str, part: str) -> str:
+    while part in s:
+        s = s.replace(part, '', 1)
+
+    return s
+
+
+# print(removeOccurrences('daabcbaabcbc', 'abc'))  # -> dab
+# print(removeOccurrences('axxxxyyyyb', 'xy'))     # -> ab
+
+
+def removeStars(s: str) -> str:
+    stack = []
+
+    for caractere in s:
+        if caractere == '*':
+            stack.pop()
+            continue
+
+        stack.append(caractere)
+
+    return ''.join(stack)
+
+
+# print(removeStars('leet**cod*e'))    # -> lecoe
+# print(removeStars('erase*****'))     # -> ""
+
+
+def checkValidString(s: str) -> bool:
+    # *******
+
+    lo = hi = 0
+    for c in s:
+        if c == '(':
+            lo += 1
+            hi += 1
+        elif c == ')':
+            lo -= 1
+            hi -= 1
+        else:
+            lo -= 1
+            hi += 1
+
+        if hi < 0:
+            return False
+
+        lo = max(lo, 0)
+
+    return lo == 0
+
+
+# print(checkValidString("((((()(()()()*()(((((*)()*(**(())))))(())()())(((())())())))))))(((((())*)))()))(()((*()*(*)))(*)()"))  # -> True
+# print(checkValidString("()"))    # -> True
+# print(checkValidString("(*)"))   # -> True
+# print(checkValidString("(*))"))  # -> True
+
+
+def isValid(s: str) -> bool:
+    stack = []
+
+    for caractere in s:
+        if caractere == ')' and len(stack) > 0:
+            if stack[-1] == '(':
+                stack.pop()
+                continue
+            else:
+                return False
+
+        if caractere == ']' and len(stack) > 0:
+            if stack[-1] == '[':
+                stack.pop()
+                continue
+            else:
+                return False
+
+        if caractere == '}' and len(stack) > 0:
+            if stack[-1] == '{':
+                stack.pop()
+                continue
+            else:
+                return False
+
+        stack.append(caractere)
+
+    if len(stack) > 0:
+        return False
+    else:
+        return True
+
+
+print(isValid('()'))      # -> True
+print(isValid('()[]{}'))  # -> True
+print(isValid('(]'))      # -> False
+print(isValid('([])'))    # -> True
