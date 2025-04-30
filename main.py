@@ -1195,7 +1195,125 @@ def isValid(s: str) -> bool:
         return True
 
 
-print(isValid('()'))      # -> True
-print(isValid('()[]{}'))  # -> True
-print(isValid('(]'))      # -> False
-print(isValid('([])'))    # -> True
+# print(isValid('()'))      # -> True
+# print(isValid('()[]{}'))  # -> True
+# print(isValid('(]'))      # -> False
+# print(isValid('([])'))    # -> True
+
+
+def findNumbers(nums: List[int]) -> int:
+    if len(nums) == 0:
+        return 0
+
+    result = 0
+
+    for num in nums:
+        if (len(str(num)) % 2) == 0:
+            result += 1
+
+    return result
+
+
+# print(findNumbers([12,345,2,6,7896]))   # -> 2
+# print(findNumbers([555,901,482,1771]))  # -> 1
+
+
+def maxProfit(prices: List[int]) -> int:
+    min_price = prices[0]
+    max_profit = 0
+
+    for price in prices:
+        # Verificando se o valor atual é o menor já visto:
+        if price < min_price:
+            min_price = price
+
+        # Subtraindo o preço atual pelo menor preço já visto para encontrar o profit atual:
+        profit = price - min_price
+
+        # Verificando se o profit atual é maior do que o maior profit já visto:
+        if profit > max_profit:
+            max_profit = profit
+
+    return max_profit
+
+
+# print(maxProfit([7,1,5,3,6,4]))  # -> 5
+# print(maxProfit([7,6,4,3,1]))    # -> 0
+
+
+def sumEvenAfterQueries(nums: List[int], queries: List[List[int]]) -> List[int]:
+    result = []
+
+    sum_actual = sum(num for num in nums if num % 2 == 0)
+
+    for val, index in queries:
+        if (nums[index] % 2) == 0:
+            sum_actual -= nums[index]  # Removo o valor do sum se ele era inicialmente par.
+
+        nums[index] = nums[index] + val
+
+        if (nums[index] % 2) == 0:
+            sum_actual += nums[index]  # Adiciona a soma se ele se tornou/continuou sendo par.
+
+        result.append(sum_actual)
+
+    return result
+
+
+# print(sumEvenAfterQueries([1,2,3,4], [[1,0],[-3,1],[-4,0],[2,3]]))  # -> [8,6,2,4]
+# print(sumEvenAfterQueries([1], [[4,0]]))                            # -> [0]
+
+
+def wordSubsets(words1: List[str], words2: List[str]) -> List[str]:
+    result = []
+
+    # Criando um hash para cada palavra dentro de words2 e adicionando em temp_words:
+    # Exemplo: [{'e': 1}, {'o': 1}]
+    temp_words = []
+    for word in words2:
+        temp_hash = dict()
+        for letter in word:
+            temp_hash[letter] = temp_hash.get(letter, 0) + 1
+        temp_words.append(temp_hash.copy())
+        temp_hash.clear()
+
+    print(temp_words)
+
+    # Criando um hash de letras únicas do words2, onde cada letra tem um contador de aparição por item da lista:
+    # O contador de aparição armazena o maior número de vezes que a letra apareceu em uma única palavra.
+    # ["lo","eo"]    -> {'l': 1, 'o': 1, 'e': 1}
+    # ["c","cc","b"] -> {'c': 2, 'b': 1}
+    hash_word = dict()
+    for item in temp_words:
+        for key in item.keys():
+            hash_word[key] = max(item[key], hash_word.get(key, 0))
+
+    print(hash_word)
+
+    # Para cada palavra em words1, transformo a palavra em um hash de letras:
+    for palavra in words1:
+        hash_temp = dict()
+
+        for letter in palavra:
+            hash_temp[letter] = hash_temp.get(letter, 0) + 1
+
+        # Verifico se o número de letras únicas do hash_word é maior que o número das respectivas letras no meu hash de letras do words1.
+        # Se for maior eu interrompo o loop e descarto a palavra alvo.
+        # Se por fim tudo der certo (todas as letras de hash_word existirem na palavra alvo, eu adiciono a palavra em result.
+        temp_value = True
+        for key in hash_word.keys():
+            if hash_word[key] > hash_temp.get(key, False):
+                temp_value = False
+                break
+
+        if temp_value:
+            result.append(palavra)
+            continue
+
+    return result
+
+
+print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["e","o"]))    # -> ["facebook","google","leetcode"]
+print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["lc","eo"]))  # -> ["leetcode"]
+print(wordSubsets(["acaac","cccbb","aacbb","caacc","bcbbb"], ["c","cc","b"]))       # -> ["cccbb"]
+print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["lo","eo"]))  # -> ["google","leetcode"]
