@@ -1313,7 +1313,52 @@ def wordSubsets(words1: List[str], words2: List[str]) -> List[str]:
     return result
 
 
-print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["e","o"]))    # -> ["facebook","google","leetcode"]
-print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["lc","eo"]))  # -> ["leetcode"]
-print(wordSubsets(["acaac","cccbb","aacbb","caacc","bcbbb"], ["c","cc","b"]))       # -> ["cccbb"]
-print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["lo","eo"]))  # -> ["google","leetcode"]
+# print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["e","o"]))    # -> ["facebook","google","leetcode"]
+# print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["lc","eo"]))  # -> ["leetcode"]
+# print(wordSubsets(["acaac","cccbb","aacbb","caacc","bcbbb"], ["c","cc","b"]))       # -> ["cccbb"]
+# print(wordSubsets(["amazon","apple","facebook","google","leetcode"], ["lo","eo"]))  # -> ["google","leetcode"]
+
+
+def intToRoman(num: int) -> str:
+    options = {'1': 'I', '4': 'IV', '5': 'V', '9': 'IX', '10': 'X', '40': 'XL', '50': 'L', '90': 'XC',
+               '100': 'C', '400': 'CD', '500': 'D', '900': 'CM', '1000': 'M'}
+    result = []
+
+    cont = 0
+    temp_fix = len(str(num))
+    temp = temp_fix - 1
+    while True:
+        if cont == temp_fix:
+            break
+
+        actual_value = str(num)[cont] + ('0' * temp)
+        ini_div = '1' + ('0' * (len(actual_value) - 1))
+        division_result = int(actual_value) // int(ini_div)
+
+        if division_result <= 3:
+            target_hash = options[ini_div]
+            for c in range(division_result):
+                result.append(target_hash)
+
+        elif division_result == 4 or division_result == 9:
+            target_hash = options[actual_value]
+            result.append(target_hash)
+
+        elif 5 <= division_result < 9:
+            temp_value = '5' + ('0' * temp)
+            result.append(options[temp_value])
+
+            temp_value = '1' + ('0' * temp)
+            target_hash = options[temp_value]
+            for c in range(division_result - 5):
+                result.append(target_hash)
+
+        cont += 1
+        temp -= 1
+
+    return ''.join(result)
+
+
+print(intToRoman(3749))  # -> MMMDCCXLIX
+print(intToRoman(58))    # -> LVIII
+print(intToRoman(1994))  # -> MCMXCIV
