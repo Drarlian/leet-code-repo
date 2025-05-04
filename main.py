@@ -1359,6 +1359,27 @@ def intToRoman(num: int) -> str:
     return ''.join(result)
 
 
-print(intToRoman(3749))  # -> MMMDCCXLIX
-print(intToRoman(58))    # -> LVIII
-print(intToRoman(1994))  # -> MCMXCIV
+# print(intToRoman(3749))  # -> MMMDCCXLIX
+# print(intToRoman(58))    # -> LVIII
+# print(intToRoman(1994))  # -> MCMXCIV
+
+
+def numEquivDominoPairs(dominoes: List[List[int]]) -> int:
+    new_dominoes = dict()
+
+    for dominoe in dominoes:
+        temp = tuple(sorted(dominoe))
+        new_dominoes[temp] = new_dominoes.get(temp, 0) + 1
+
+    total = 0
+    for item in new_dominoes:
+        if new_dominoes[item] > 1:
+            total += (new_dominoes[item] * (new_dominoes[item] - 1)) // 2
+
+    return total
+
+
+print(numEquivDominoPairs([[1,2],[2,1],[3,4],[5,6]]))        # -> 1
+print(numEquivDominoPairs([[1,2],[1,2],[1,1],[1,2],[2,2]]))  # -> 3
+print(numEquivDominoPairs([[2,1],[1,2],[1,2],[1,2],[2,1],[1,1],[1,2],[2,2]]))  # -> 15
+print(numEquivDominoPairs([[1,1],[2,2],[1,1],[1,2],[1,2],[1,1]]))  # -> 4
