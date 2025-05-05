@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import Optional, List
 from numpy import median
 
@@ -1379,7 +1380,34 @@ def numEquivDominoPairs(dominoes: List[List[int]]) -> int:
     return total
 
 
-print(numEquivDominoPairs([[1,2],[2,1],[3,4],[5,6]]))        # -> 1
-print(numEquivDominoPairs([[1,2],[1,2],[1,1],[1,2],[2,2]]))  # -> 3
-print(numEquivDominoPairs([[2,1],[1,2],[1,2],[1,2],[2,1],[1,1],[1,2],[2,2]]))  # -> 15
-print(numEquivDominoPairs([[1,1],[2,2],[1,1],[1,2],[1,2],[1,1]]))  # -> 4
+# print(numEquivDominoPairs([[1,2],[2,1],[3,4],[5,6]]))                          # -> 1
+# print(numEquivDominoPairs([[1,2],[1,2],[1,1],[1,2],[2,2]]))                    # -> 3
+# print(numEquivDominoPairs([[2,1],[1,2],[1,2],[1,2],[2,1],[1,1],[1,2],[2,2]]))  # -> 15
+# print(numEquivDominoPairs([[1,1],[2,2],[1,1],[1,2],[1,2],[1,1]]))              # -> 4
+
+
+def equalFrequency(word: str) -> bool:
+    letters = [letter for letter in word]
+    infos = defaultdict(int)
+
+    for letter in letters:
+        infos[letter] += 1
+
+    for key, value in infos.items():
+        temp_dict = infos.copy()
+
+        if temp_dict[key] == 1:
+            del temp_dict[key]
+        else:
+            temp_dict[key] = temp_dict[key] - 1
+
+        if len(set(temp_dict.values())) == 1:
+            return True
+
+        temp_dict[key] += 1
+
+    return False
+
+
+print(equalFrequency("abcc"))  # -> True
+print(equalFrequency("aazz"))  # -> False
