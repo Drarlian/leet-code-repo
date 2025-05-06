@@ -1454,6 +1454,102 @@ def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[Li
     return ini_final_result
 
 
-print(addTwoNumbers(l1 = [2,4,3], l2 = [5,6,4]))            # -> [7,0,8]
-print(addTwoNumbers(l1 = [0], l2 = [0]))                    # -> [0]
-print(addTwoNumbers(l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]))  # -> [8,9,9,9,0,0,0,1]
+# print(addTwoNumbers(l1 = [2,4,3], l2 = [5,6,4]))            # -> [7,0,8]
+# print(addTwoNumbers(l1 = [0], l2 = [0]))                    # -> [0]
+# print(addTwoNumbers(l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]))  # -> [8,9,9,9,0,0,0,1]
+
+
+def scoreOfString(s: str) -> int:
+    string_list = [x for x in s]
+    result = []
+
+    past = 0
+    for indice in range(1, len(string_list)):
+        result.append(abs(ord(string_list[past]) - ord(string_list[indice])))
+        past += 1
+
+    return sum(result)
+
+
+# print(scoreOfString("hello"))  # -> 13
+# print(scoreOfString("zaz"))    # -> 50
+
+
+def defangIPaddr(address: str) -> str:
+    temp = [x for x in address]
+
+    for indice, value in enumerate(temp.copy()):
+        if value == '.':
+            temp[indice] = '[.]'
+
+    return ''.join(temp)
+
+
+# print(defangIPaddr("1.1.1.1"))       # -> "1[.]1[.]1[.]1"
+# print(defangIPaddr("255.100.50.0"))  # -> "255[.]100[.]50[.]0"
+
+
+def numIdenticalPairs(nums: List[int]) -> int:
+    temp = defaultdict(int)
+
+    for num in nums:
+        temp[num] += 1
+
+    result = 0
+    for value in temp.values():
+        if value > 1:
+            result += (value * (value - 1)) // 2
+
+    return result
+
+
+# print(numIdenticalPairs([1,2,3,1,1,3]))  # -> 4
+# print(numIdenticalPairs([1,1,1,1]))      # -> 6
+# print(numIdenticalPairs([1,2,3]))        # -> 0
+
+
+def theMaximumAchievableX(num: int, t: int) -> int:
+    return (num + t) + t
+
+
+# print(theMaximumAchievableX(num = 4, t = 1))  # -> 6
+# print(theMaximumAchievableX(num = 3, t = 2))  # -> 7
+
+
+def transformArray(nums: List[int]) -> List[int]:
+    for indice, num in enumerate(nums.copy()):
+        if (num % 2) == 0:
+            nums[indice] = 0
+        else:
+            nums[indice] = 1
+
+    return sorted(nums)
+
+
+# print(transformArray([4,3,2,1]))    # -> [0,0,1,1]
+# print(transformArray([1,5,1,4,2]))  # -> [0,0,1,1,1]
+
+
+def sortTheStudents(score: List[List[int]], k: int) -> List[List[int]]:
+    score.sort(key=lambda x: x[k], reverse=True)
+    return score
+
+
+# print(sortTheStudents([[10,6,9,1],[7,5,11,2],[4,8,3,15]], 2))  # -> [[7,5,11,2],[10,6,9,1],[4,8,3,15]]
+# print(sortTheStudents([[3,4],[5,6]], 0))                       # -> [[5,6],[3,4]]
+
+def shuffle(nums: List[int], n: int) -> List[int]:
+    x = nums[0:n]
+    y = nums[n:]
+    result = []
+
+    for i in range(len(nums) // 2):
+        result.append(x[i])
+        result.append(y[i])
+
+    return result
+
+
+print(shuffle([2,5,1,3,4,7], 3))      # -> [2,3,5,4,1,7]
+print(shuffle([1,2,3,4,4,3,2,1], 4))  # -> [1,4,2,3,3,2,4,1]
+print(shuffle([1,1,2,2], 2))          # -> [1,2,1,2]
