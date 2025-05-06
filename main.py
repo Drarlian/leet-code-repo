@@ -1409,5 +1409,51 @@ def equalFrequency(word: str) -> bool:
     return False
 
 
-print(equalFrequency("abcc"))  # -> True
-print(equalFrequency("aazz"))  # -> False
+# print(equalFrequency("abcc"))  # -> True
+# print(equalFrequency("aazz"))  # -> False
+
+
+def buildArray(nums: List[int]) -> List[int]:
+    result = [0] * len(nums)
+
+    for indice, valor in enumerate(nums):
+        result[indice] = nums[valor]
+
+    return result
+
+
+# print(buildArray([0,2,1,5,3,4]))  # -> [0,1,2,4,5,3]
+# print(buildArray([5,0,1,2,3,4]))  # -> [4,5,0,1,2,3]
+
+
+def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    l1_new = []
+    l2_new = []
+
+    while l1:
+        l1_new.insert(0, str(l1.val))
+        l1 = l1.next
+
+    while l2:
+        l2_new.insert(0, str(l2.val))
+        l2 = l2.next
+
+    temp = int(''.join(l1_new)) + int(''.join(l2_new))
+    new_temp = []
+
+    for c in str(temp):
+        new_temp.insert(0, c)
+
+    final_result = ListNode(int(new_temp[0]))
+    ini_final_result = final_result
+
+    for value in new_temp[1:]:
+        final_result.next = ListNode(int(value))
+        final_result = final_result.next
+
+    return ini_final_result
+
+
+print(addTwoNumbers(l1 = [2,4,3], l2 = [5,6,4]))            # -> [7,0,8]
+print(addTwoNumbers(l1 = [0], l2 = [0]))                    # -> [0]
+print(addTwoNumbers(l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]))  # -> [8,9,9,9,0,0,0,1]
