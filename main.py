@@ -1538,6 +1538,7 @@ def sortTheStudents(score: List[List[int]], k: int) -> List[List[int]]:
 # print(sortTheStudents([[10,6,9,1],[7,5,11,2],[4,8,3,15]], 2))  # -> [[7,5,11,2],[10,6,9,1],[4,8,3,15]]
 # print(sortTheStudents([[3,4],[5,6]], 0))                       # -> [[5,6],[3,4]]
 
+
 def shuffle(nums: List[int], n: int) -> List[int]:
     x = nums[0:n]
     y = nums[n:]
@@ -1550,6 +1551,32 @@ def shuffle(nums: List[int], n: int) -> List[int]:
     return result
 
 
-print(shuffle([2,5,1,3,4,7], 3))      # -> [2,3,5,4,1,7]
-print(shuffle([1,2,3,4,4,3,2,1], 4))  # -> [1,4,2,3,3,2,4,1]
-print(shuffle([1,1,2,2], 2))          # -> [1,2,1,2]
+# print(shuffle([2,5,1,3,4,7], 3))      # -> [2,3,5,4,1,7]
+# print(shuffle([1,2,3,4,4,3,2,1], 4))  # -> [1,4,2,3,3,2,4,1]
+# print(shuffle([1,1,2,2], 2))          # -> [1,2,1,2]
+
+
+import heapq
+
+class SeatManager:
+    def __init__(self, n: int):
+        self.seats = list(range(1, n+1))
+        heapq.heapify(self.seats)
+
+    def reserve(self) -> int:
+        return heapq.heappop(self.seats)
+
+    def unreserve(self, seatNumber: int) -> None:
+        heapq.heappush(self.seats, seatNumber)
+
+
+# ["SeatManager", "reserve", "reserve", "unreserve", "reserve", "reserve", "reserve", "reserve", "unreserve"]
+teste = SeatManager(5)
+teste.reserve()
+teste.reserve()
+teste.unreserve(2)
+teste.reserve()
+teste.reserve()
+teste.reserve()
+teste.reserve()
+teste.unreserve(5)
