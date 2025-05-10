@@ -1571,12 +1571,55 @@ class SeatManager:
 
 
 # ["SeatManager", "reserve", "reserve", "unreserve", "reserve", "reserve", "reserve", "reserve", "unreserve"]
-teste = SeatManager(5)
-teste.reserve()
-teste.reserve()
-teste.unreserve(2)
-teste.reserve()
-teste.reserve()
-teste.reserve()
-teste.reserve()
-teste.unreserve(5)
+# teste = SeatManager(5)
+# teste.reserve()
+# teste.reserve()
+# teste.unreserve(2)
+# teste.reserve()
+# teste.reserve()
+# teste.reserve()
+# teste.reserve()
+# teste.unreserve(5)
+
+
+def minSum(nums1: List[int], nums2: List[int]) -> int:
+    if sum(nums1) > sum(nums2):
+        biggest_nums = sum(nums1)
+        smallest_nums = sum(nums2)
+        biggest_array = nums1.copy()
+        smallest_array = nums2.copy()
+    else:
+        biggest_nums = sum(nums2)
+        smallest_nums = sum(nums1)
+        biggest_array = nums2.copy()
+        smallest_array = nums1.copy()
+
+    if (biggest_nums == smallest_nums) and (biggest_array.count(0) == 0 and smallest_array.count(0) == 0):
+        return biggest_nums
+
+    if (biggest_nums == smallest_nums) and (biggest_array.count(0) == smallest_array.count(0)):
+        return biggest_array.count(0)
+
+    target_value = biggest_nums + biggest_array.count(0)
+
+    temp = smallest_array.count(0)
+    if temp > 0:
+        diference_target = (target_value - smallest_nums) / temp
+    else:
+        return -1
+
+    if diference_target >= 1:
+        return target_value
+    else:
+        if biggest_array.count(0) == 0:
+            return -1
+        else:
+            return smallest_nums + smallest_array.count(0)
+
+
+print(minSum([3,2,0,1,0], [6,5,0]))                                                                # -> 12
+print(minSum([2,0,2,0], [1,4]))                                                                    # -> -1
+print(minSum([8,13,15,18,0,18,0,0,5,20,12,27,3,14,22,0], [29,1,6,0,10,24,27,17,14,13,2,19,2,11]))  # -> 179
+print(minSum([9,5], [15,12,5,21,4,26,27,9,6,29,0,18,16,0,0,0,20]))                                 # -> -1
+print(minSum([1,2,3,2], [1,4,3]))                                                                  # -> 8
+print(minSum([0], [0]))                                                                            # -> 1
