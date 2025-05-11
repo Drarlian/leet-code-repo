@@ -1617,9 +1617,85 @@ def minSum(nums1: List[int], nums2: List[int]) -> int:
             return smallest_nums + smallest_array.count(0)
 
 
-print(minSum([3,2,0,1,0], [6,5,0]))                                                                # -> 12
-print(minSum([2,0,2,0], [1,4]))                                                                    # -> -1
-print(minSum([8,13,15,18,0,18,0,0,5,20,12,27,3,14,22,0], [29,1,6,0,10,24,27,17,14,13,2,19,2,11]))  # -> 179
-print(minSum([9,5], [15,12,5,21,4,26,27,9,6,29,0,18,16,0,0,0,20]))                                 # -> -1
-print(minSum([1,2,3,2], [1,4,3]))                                                                  # -> 8
-print(minSum([0], [0]))                                                                            # -> 1
+# print(minSum([3,2,0,1,0], [6,5,0]))                                                                # -> 12
+# print(minSum([2,0,2,0], [1,4]))                                                                    # -> -1
+# print(minSum([8,13,15,18,0,18,0,0,5,20,12,27,3,14,22,0], [29,1,6,0,10,24,27,17,14,13,2,19,2,11]))  # -> 179
+# print(minSum([9,5], [15,12,5,21,4,26,27,9,6,29,0,18,16,0,0,0,20]))                                 # -> -1
+# print(minSum([1,2,3,2], [1,4,3]))                                                                  # -> 8
+# print(minSum([0], [0]))                                                                            # -> 1
+
+
+def threeConsecutiveOdds(arr: List[int]) -> bool:
+    count = 0
+
+    for c in arr:
+        if (c % 2) == 1:
+            count += 1
+        else:
+            count = 0
+
+        if count == 3:
+            return True
+
+    return False
+
+
+# print(threeConsecutiveOdds([2,6,4,1]))               # -> False
+# print(threeConsecutiveOdds([1,2,34,3,4,5,7,23,12]))  # -> True
+
+
+def reverse(x: int) -> int:
+    temp = []
+    string_value = str(x)
+
+    for c in string_value[len(string_value): 0: -1]:
+        temp.append(c)
+
+    if string_value[0] != '-':
+        temp.append(string_value[0])
+    else:
+        temp.insert(0, string_value[0])
+
+    result = int(''.join(temp))
+
+    if result <= (2 ** 31) - 1 and result >= -2 ** 31:
+        return result
+
+    return 0
+
+
+# print(reverse(123))         # -> 321
+# print(reverse(-123))        # -> -321
+# print(reverse(120))         # -> 21
+# print(reverse(1534236469))  # -> 0
+
+
+def swapPairs(head: Optional[ListNode]) -> Optional[ListNode]:
+    if not head or head.next is None:
+        return head
+
+    temp = ListNode()
+    ini_temp = temp
+
+    while head:
+        next_node = head.next
+
+        if next_node is None:
+            temp.next = ListNode(head.val)
+            break
+
+        temp.next = ListNode(head.next.val)
+        temp = temp.next
+        temp.next = ListNode(head.val)
+        temp = temp.next
+
+        head = head.next.next
+
+
+    return ini_temp.next
+
+
+print(swapPairs([1,2,3,4]))  # -> [2,1,4,3]
+print(swapPairs([]))         # -> []
+print(swapPairs([1]))        # -> [1]
+print(swapPairs([1,2,3]))    # -> [2,1,3]
