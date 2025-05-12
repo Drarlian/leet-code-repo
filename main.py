@@ -1695,7 +1695,72 @@ def swapPairs(head: Optional[ListNode]) -> Optional[ListNode]:
     return ini_temp.next
 
 
-print(swapPairs([1,2,3,4]))  # -> [2,1,4,3]
-print(swapPairs([]))         # -> []
-print(swapPairs([1]))        # -> [1]
-print(swapPairs([1,2,3]))    # -> [2,1,3]
+# print(swapPairs([1,2,3,4]))  # -> [2,1,4,3]
+# print(swapPairs([]))         # -> []
+# print(swapPairs([1]))        # -> [1]
+# print(swapPairs([1,2,3]))    # -> [2,1,3]
+
+
+def findEvenNumbers(digits: List[int]) -> List[int]:
+    from itertools import permutations
+
+    result = set()
+
+    for i, j, k in permutations(range(len(digits)), 3):
+        # t = (str(digits[i]), str(digits[j]), str(digits[k]))
+        d1, d2, d3 = (digits[i], digits[j], digits[k])
+
+        if d1 == 0 :
+            continue
+
+        # temp = list(t)
+        # result.add(int(''.join(temp)))
+
+        num = d1*100 + d2*10 + d3*1
+
+        if (num % 2) == 1:
+            continue
+
+        result.add(num)
+
+    return sorted(list(result))
+
+
+# print(findEvenNumbers([2,1,3,0]))    # -> [102,120,130,132,210,230,302,310,312,320]
+# print(findEvenNumbers([2,2,8,8,2]))  # -> [222,228,282,288,822,828,882]
+# print(findEvenNumbers([3,7,5]))      # -> []
+
+
+def letterCombinations(digits: str) -> List[str]:
+    from itertools import product
+
+    if not digits:
+        return []
+
+    letters_translate = {
+        '2': ['a', 'b', 'c'],
+        '3': ['d', 'e', 'f'],
+        '4': ['g', 'h', 'i'],
+        '5': ['j', 'k', 'l'],
+        '6': ['m', 'n', 'o'],
+        '7': ['p', 'q', 'r', 's'],
+        '8': ['t', 'u', 'v'],
+        '9': ['w', 'x', 'y', 'z']
+    }
+
+    if len(digits) == 1:
+        return letters_translate[digits[0]]
+
+    array_letters = [letters_translate[d] for d in digits]
+
+    result = []
+
+    for j in product(*array_letters):
+        result.append(''.join(j))
+
+    return result
+
+
+print(letterCombinations("23"))  # -> ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+print(letterCombinations(""))    # -> []
+print(letterCombinations("2"))   # -> ["a","b","c"]
