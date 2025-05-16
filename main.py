@@ -9,6 +9,14 @@ class ListNode:
         self.next = next
 
 
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 def romanToInt(s: str) -> int:
     options = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     other_options = {'IV': 4, 'IX': 9, 'XL': 40, 'XC': 90, 'CD': 400, 'CM': 900}
@@ -1761,6 +1769,22 @@ def letterCombinations(digits: str) -> List[str]:
     return result
 
 
-print(letterCombinations("23"))  # -> ["ad","ae","af","bd","be","bf","cd","ce","cf"]
-print(letterCombinations(""))    # -> []
-print(letterCombinations("2"))   # -> ["a","b","c"]
+# print(letterCombinations("23"))  # -> ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+# print(letterCombinations(""))    # -> []
+# print(letterCombinations("2"))   # -> ["a","b","c"]
+
+
+def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    if not p and not q:
+        return True
+    if not p or not q:
+        return False
+    if p.val != q.val:
+        return False
+
+    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+
+
+print(isSameTree(p = [1,2,3], q = [1,2,3]))   # -> True
+print(isSameTree(p = [1,2], q = [1,None,2]))  # -> False
+print(isSameTree(p = [1,2,1], q = [1,1,2]))   # -> False
