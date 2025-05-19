@@ -1785,6 +1785,24 @@ def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
     return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
 
 
-print(isSameTree(p = [1,2,3], q = [1,2,3]))   # -> True
-print(isSameTree(p = [1,2], q = [1,None,2]))  # -> False
-print(isSameTree(p = [1,2,1], q = [1,1,2]))   # -> False
+# print(isSameTree(p = [1,2,3], q = [1,2,3]))   # -> True
+# print(isSameTree(p = [1,2], q = [1,None,2]))  # -> False
+# print(isSameTree(p = [1,2,1], q = [1,1,2]))   # -> False
+
+
+def triangleType(nums: List[int]) -> str:
+    validation = nums[0] + nums[1] > nums[2] and nums[0] + nums[2] > nums[1] and nums[1] + nums[2] > nums[0]
+    if not validation:
+        return "none"
+
+    temp = len(set(nums))
+    if temp == 1:
+        return "equilateral"
+    elif temp == 2:
+        return "isosceles"
+
+    return "scalene"
+
+
+print(triangleType([3,3,3]))  # -> "equilateral"
+print(triangleType([3,4,5]))  # -> "scalene"
