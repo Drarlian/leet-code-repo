@@ -1804,5 +1804,29 @@ def triangleType(nums: List[int]) -> str:
     return "scalene"
 
 
-print(triangleType([3,3,3]))  # -> "equilateral"
-print(triangleType([3,4,5]))  # -> "scalene"
+# print(triangleType([3,3,3]))  # -> "equilateral"
+# print(triangleType([3,4,5]))  # -> "scalene"
+
+
+def setZeroes(matrix: List[List[int]]) -> None:
+    zero_positions = [set(), set()]
+
+    for i_row, row in enumerate(matrix):
+        for i_column, column in enumerate(row):
+            if column == 0:
+                zero_positions[0].add(i_row)
+                zero_positions[1].add(i_column)
+
+    for i_row, row in enumerate(matrix):
+        for i_column, column in enumerate(row):
+            if i_row in zero_positions[0]:
+                matrix[i_row][i_column] = 0
+
+            if i_column in zero_positions[1]:
+                matrix[i_row][i_column] = 0
+
+    return matrix
+
+
+print(setZeroes([[1,1,1],[1,0,1],[1,1,1]]))  # -> [[1,0,1],[0,0,0],[1,0,1]]
+print(setZeroes([[0,1,2,0],[3,4,5,2],[1,3,1,5]]))
